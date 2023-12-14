@@ -5,7 +5,6 @@ from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-from langchain.llms import HuggingFaceHub
 from langchain.vectorstores import FAISS
 
 # # Open AI ------------- start
@@ -15,6 +14,7 @@ from langchain.vectorstores import FAISS
 
 # Hugging Face ---------- start
 from langchain.embeddings import  HuggingFaceInstructEmbeddings
+from langchain.llms import HuggingFaceHub
 # HuggingFace ------------- end
 
 def get_pdf_text(pdf_docs):
@@ -73,35 +73,6 @@ def handle_userinput(user_question):
         else:
             st.write(bot_template.replace(
                 "{{MSG}}", message.content), unsafe_allow_html=True)
-
-def main():
-    default_upload_pdf=True
-    load_dotenv()
-    st.set_page_config(page_title="CHAT",page_icon=":books")
-    st.header("Chat WIth PDFs")
-    user_question=st.text_input("Enter Your query")
-    st.write(css, unsafe_allow_html=True)
-
-    if "conversation" not in st.session_state:
-        st.session_state.conversation = None
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = None
-
-    if user_question:
-        handle_userinput(user_question)
-    
-    # # default pdf 
-    # pdf_docs = ["IPC_186045.pdf"]   
-    # if default_upload_pdf:
-    #     default_upload_pdf=False
-    #     process_pdf_files(pdf_docs)
-        
-    # for other pdfs
-    with st.sidebar:
-        st.subheader("Your documents")
-        pdf_docs = st.file_uploader("Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
-        if st.button("Process"):
-            process_pdf_files(pdf_docs=pdf_docs)
             
 def process_pdf_files(pdf_docs):
     with st.spinner("Processing"):
@@ -120,6 +91,27 @@ def process_pdf_files(pdf_docs):
 
         # create conversation chain
         st.session_state.conversation = get_conversation_chain(vectorstore)
+
+def main(pdf_docs):
+    load_dotenv()
+    # # default pdf 
+    st.set_page_config(page_title="CHAT",page_icon=":books")
+    if st.button("Process"):
+        process_pdf_files(pdf_docs=pdf_docs)
+    st.header("Chat WIth PDFs")
+    user_question=st.text_input("Enter Your query")
+    st.write(css, unsafe_allow_html=True)
+
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = None
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = None
+
+    if user_question:
+        handle_userinput(user_question)
+    
+
 if __name__ =="__main__":
-    main()
+    pdf_docs = ["parts.pdf"]   
+    main(pdf_docs=pdf_docs)
     
