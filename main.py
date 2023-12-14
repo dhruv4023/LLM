@@ -1,6 +1,6 @@
 import streamlit as st
 from dotenv import load_dotenv
-from HTML.htmlTemplates import css, bot_template, user_template
+from HTMLfiles.htmlTemplates import css, bot_template, user_template
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.memory import ConversationBufferMemory
