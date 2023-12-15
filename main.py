@@ -96,7 +96,7 @@ def main(pdf_docs):
     load_dotenv()
     # # default pdf 
     st.set_page_config(page_title="CHAT",page_icon=":books")
-    if st.button("Process"):
+    if st.button("Load LAW PDF"):
         process_pdf_files(pdf_docs=pdf_docs)
     st.header("Chat WIth PDFs")
     user_question=st.text_input("Enter Your query")
@@ -112,6 +112,5 @@ def main(pdf_docs):
     
 
 if __name__ =="__main__":
-    pdf_docs = ["parts.pdf"]   
+    pdf_docs = ["parts.pdf"]  
     main(pdf_docs=pdf_docs)
-    
