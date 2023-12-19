@@ -42,8 +42,8 @@ def get_text_chunks(text):
 
 def get_vectorstore(text_chunks):
     # embeddings = ChatOpenAI()
-    embeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small")
-    # embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
+    embeddings = HuggingFaceInstructEmbeddings(model_name="WhereIsAI/UAE-Large-V1")
+    # embeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
