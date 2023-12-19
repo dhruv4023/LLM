@@ -1,0 +1,22 @@
+from langchain.llms.huggingface_pipeline import HuggingFacePipeline
+from transformers import AutoModelForCausalLM, AutoTokenizer, pipeline
+
+model_id = "gpt2"
+tokenizer = AutoTokenizer.from_pretrained(model_id)
+model = AutoModelForCausalLM.from_pretrained(model_id)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=10)
+hf = HuggingFacePipeline(pipeline=pipe)
+
+from langchain.prompts import PromptTemplate
+
+from langchain.chains import LLMChain
+template = """Question: {question}
+
+Answer: Let's think step by step."""
+prompt = PromptTemplate.from_template(template)
+
+chain = prompt | hf
+
+question = "What is electroencephalography?"
+
+print(chain.invoke({"question": question}))
