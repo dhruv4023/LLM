@@ -42,8 +42,8 @@ def get_text_chunks(text):
 
 def get_vectorstore(text_chunks):
     # embeddings = ChatOpenAI()
-    embeddings = HuggingFaceInstructEmbeddings(model_name="WhereIsAI/UAE-Large-V1")
     # embeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small")
+    embeddings = HuggingFaceInstructEmbeddings(model_name="WhereIsAI/UAE-Large-V1")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
@@ -98,7 +98,7 @@ def main(pdf_docs):
     st.set_page_config(page_title="CHAT",page_icon=":books")
     if st.button("Load LAW PDF"):
         process_pdf_files(pdf_docs=pdf_docs)
-    st.header("Chat WIth PDFs")
+    st.header("Chat With PDFs")
     user_question=st.text_input("Enter Your query")
     st.write(css, unsafe_allow_html=True)
 
