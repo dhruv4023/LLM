@@ -1,5 +1,0 @@
-I have to use data related to laws and using that create a model which will help to extract data related to query entered by the lawyer with the reference document name and page number. so that it will improve finding relevant data for a particular case while studying it.
-
-
-
-pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121

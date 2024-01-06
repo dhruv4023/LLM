@@ -1,11 +1,11 @@
+# https://www.youtube.com/watch?v=dXxQ0LR-3Hg
 import streamlit as st
 from dotenv import load_dotenv
-from HTML.htmlTemplates import css, bot_template, user_template
+from HTMLfiles.htmlTemplates import css, bot_template, user_template
 from PyPDF2 import PdfReader
 from langchain.text_splitter import CharacterTextSplitter
 from langchain.memory import ConversationBufferMemory
 from langchain.chains import ConversationalRetrievalChain
-from langchain.llms import HuggingFaceHub
 from langchain.vectorstores import FAISS
 
 # # Open AI ------------- start
@@ -15,6 +15,7 @@ from langchain.vectorstores import FAISS
 
 # Hugging Face ---------- start
 from langchain.embeddings import  HuggingFaceInstructEmbeddings
+from langchain.llms import HuggingFaceHub
 # HuggingFace ------------- end
 
 def get_pdf_text(pdf_docs):
@@ -42,8 +43,8 @@ def get_text_chunks(text):
 
 def get_vectorstore(text_chunks):
     # embeddings = ChatOpenAI()
-    embeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small")
-    # embeddings = HuggingFaceInstructEmbeddings(model_name="hkunlp/instructor-xl")
+    # embeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small")
+    embeddings = HuggingFaceInstructEmbeddings(model_name="WhereIsAI/UAE-Large-V1")
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
@@ -52,8 +53,8 @@ def get_conversation_chain(vectorstore):
     # llm = ChatOpenAI()
     # llm = HuggingFaceHub(repo_id="google/flan-t5-xxl", model_kwargs={"temperature":0.5, "max_length":512})
     llm = HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.5, "max_length":512})
-
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
+    
     conversation_chain = ConversationalRetrievalChain.from_llm(
         llm=llm,
         retriever=vectorstore.as_retriever(),
@@ -73,35 +74,6 @@ def handle_userinput(user_question):
         else:
             st.write(bot_template.replace(
                 "{{MSG}}", message.content), unsafe_allow_html=True)
-
-def main():
-    default_upload_pdf=True
-    load_dotenv()
-    st.set_page_config(page_title="CHAT",page_icon=":books")
-    st.header("Chat WIth PDFs")
-    user_question=st.text_input("Enter Your query")
-    st.write(css, unsafe_allow_html=True)
-
-    if "conversation" not in st.session_state:
-        st.session_state.conversation = None
-    if "chat_history" not in st.session_state:
-        st.session_state.chat_history = None
-
-    if user_question:
-        handle_userinput(user_question)
-    
-    # # default pdf 
-    # pdf_docs = ["IPC_186045.pdf"]   
-    # if default_upload_pdf:
-    #     default_upload_pdf=False
-    #     process_pdf_files(pdf_docs)
-        
-    # for other pdfs
-    with st.sidebar:
-        st.subheader("Your documents")
-        pdf_docs = st.file_uploader("Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
-        if st.button("Process"):
-            process_pdf_files(pdf_docs=pdf_docs)
             
 def process_pdf_files(pdf_docs):
     with st.spinner("Processing"):
@@ -120,6 +92,26 @@ def process_pdf_files(pdf_docs):
 
         # create conversation chain
         st.session_state.conversation = get_conversation_chain(vectorstore)
-if __name__ =="__main__":
-    main()
+
+def main(pdf_docs):
+    load_dotenv()
+    # # default pdf 
+    st.set_page_config(page_title="CHAT",page_icon=":books")
+    if st.button("Load LAW PDF"):
+        process_pdf_files(pdf_docs=pdf_docs)
+    st.header("Chat With PDFs")
+    user_question=st.text_input("Enter Your query")
+    st.write(css, unsafe_allow_html=True)
+
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = None
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = None
+
+    if user_question:
+        handle_userinput(user_question)
     
+
+if __name__ =="__main__":
+    pdf_docs = ["parts.pdf"]  
+    main(pdf_docs=pdf_docs)
