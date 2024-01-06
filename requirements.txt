@@ -13,7 +13,13 @@ huggingface-hub==0.14.1
 # uncomment to use instructor embeddings
 InstructorEmbedding==1.0.1
 sentence-transformers==2.2.2
+transformers==4.31.0
 
 pypdf==3.17.3
 
-python-docx
+# to generate word document 
+python-docx==1.1.0
+
+# to create API
+Flask==3.0.0
+

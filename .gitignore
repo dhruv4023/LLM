@@ -1,7 +1,6 @@
 /venv
 .env
 __pycache__/
-skyscanner/*
 *.pkl
 Models/
 Outputs/
