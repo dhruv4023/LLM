@@ -68,7 +68,7 @@ files=["IPC_186045.pdf"]
 chain=make_model(files)
 app.config['TIMEOUT'] = 60*5
 
-from doxGenerator import generate_docx_with_bullets
+from write_in_file import generate_docx_with_bullets
 from Generate_more_text import generate_legal_notice
 @app.route('/', methods=['GET', 'POST'])
 def index():
