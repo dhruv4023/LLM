@@ -54,23 +54,27 @@ print("vectore store created")
 from langchain.chains import RetrievalQA
 from langchain.llms import HuggingFaceHub
 
-chain_type_kwargs = {"prompt": prompt}
-chain = RetrievalQA.from_chain_type(
-    llm = HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.9, "max_length":4096}), # best
+    # llm = HuggingFaceHub(repo_id="HuggingFaceH4/zephyr-7b-beta", model_kwargs={"temperature":0.7}), # best
+    
     # llm = HuggingFaceHub(repo_id="TinyLlama/TinyLlama-1.1B-intermediate-step-1431k-3T", model_kwargs={"temperature":0.5, "max_length":"512"}),
     # llm = HuggingFaceHub(repo_id="meta-llama/Llama-2-7b-chat-hf", model_kwargs={"temperature":0.5, "max_length":"512"}),
     # llm = HuggingFaceHub(repo_id="cognitivecomputations/dolphin-2.5-mixtral-8x7b", model_kwargs={"temperature":0.5, "max_length":"512"}),
     # llm = HuggingFaceHub(repo_id="TinyLlama/TinyLlama-1.1B-Chat-v1.0", model_kwargs={"temperature":0.7, "max_length":"400"}),
-    # llm=HuggingFaceTextGenInference(max_new_tokens=512),
+    # llm = HuggingFaceTextGenInference(max_new_tokens=512,temperature= 0.8),
     # llm = HuggingFaceHub(repo_id="microsoft/phi-2", model_kwargs={"temperature":0.5, "max_length":"10000"},trust_remote_code=True),
+llm = HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.8,"max_length":4096,"min_length":1024}), # best
+# llm=HuggingFaceHub(repo_id=)
+chain = RetrievalQA.from_chain_type(
+    llm=llm,
     chain_type="stuff",
-    # retriever=vectorstore.as_retriever(search_kwargs={"k": 1}),    
-    retriever=vectorstore.as_retriever(),    
-    chain_type_kwargs=chain_type_kwargs,
+    retriever=vectorstore.as_retriever(search_kwargs={"k": 7}),    
+    return_source_documents=True,
+    kwargs={"max_length":4096,"min_length":1024},
+    chain_type_kwargs={"prompt": prompt,"verbose": True},
 )
+    # retriever=vectorstore.as_retriever(),    
 
 def print_response(response: str):
-    import textwrap
     print("-----------------------")
     print("Answer: ")
     # print("\n".join(textwrap.wrap(response, width=100)))
@@ -84,6 +88,8 @@ from Generate_more_text import generate_legal_notice
 while(True):
     q = input("Enter your query: ")
     # q += "in which section"
-    response = chain.run(q)
-    print_response(response)
-    generate_docx_with_bullets(content=generate_legal_notice( response),output_folder="./Outputs/")
+    response = chain({"query":q, "early_stopping":True,"min_length":500})
+    bullets,src_pg_nms=generate_legal_notice(response["source_documents"])
+    print_response(response["result"])
+    bullets=(response["result"])
+    generate_docx_with_bullets(question=q,answer=response["result"],content=bullets,srcs=src_pg_nms ,output_folder="./tmp/")

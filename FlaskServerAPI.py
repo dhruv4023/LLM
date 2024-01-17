@@ -52,10 +52,10 @@ def make_model(files):
 
     chain_type_kwargs = {"prompt": prompt}
     chain = RetrievalQA.from_chain_type(
-        llm = HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.9, "max_length":4096}),
+        llm = HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.9, "max_length":4096,"max_new_tokens":4096}),
         chain_type="stuff",
-        # retriever=vectorstore.as_retriever(search_kwargs={"k": 1}),    
-        retriever=vectorstore.as_retriever(),    
+        retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),    
+        # retriever=vectorstore.as_retriever(),    
         chain_type_kwargs=chain_type_kwargs,
     )
     print("model is ready !")
@@ -63,9 +63,9 @@ def make_model(files):
     # response = chain.run("a person has done robbery ")
     # print_response(response)
 from flask import Flask, render_template, request
+app = Flask(__name__)
 files=["IPC_186045.pdf"]
 chain=make_model(files)
-app = Flask(__name__)
 app.config['TIMEOUT'] = 60*5
 
 from doxGenerator import generate_docx_with_bullets
