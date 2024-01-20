@@ -37,7 +37,7 @@ def make_model(files):
     prompt = PromptTemplate(template=template, input_variables=["context", "question"])
 
     # HFIembeddings = HuggingFaceInstructEmbeddings(model_name="WhereIsAI/UAE-Large-V1")
-    HFIembeddings = HuggingFaceInstructEmbeddings(model_name="./Models/gte-small")
+    HFIembeddings = HuggingFaceInstructEmbeddings(model_name="gte-small")
     # HFIembeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small")
     vectorstore = FAISS.from_documents(pages,embedding=HFIembeddings)
     print("vectore store created")
