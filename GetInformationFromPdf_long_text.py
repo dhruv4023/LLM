@@ -34,8 +34,7 @@ from langchain.vectorstores import FAISS
 from langchain.embeddings import  HuggingFaceInstructEmbeddings
 
 # HFIembeddings = HuggingFaceInstructEmbeddings(model_name="WhereIsAI/UAE-Large-V1")
-HFIembeddings = HuggingFaceInstructEmbeddings(model_name="./Models/gte-small")
-# HFIembeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small")
+HFIembeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small",cache_folder="./Models/")
 vectorstore = FAISS.from_documents(pages,embedding=HFIembeddings)
 print("vectore store created")
 
