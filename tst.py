@@ -1,17 +1,18 @@
-from transformers import pipeline
+import torch
+from transformers import AutoModelForCausalLM, AutoTokenizer
+tokenizer = AutoTokenizer.from_pretrained("stabilityai/stable-code-3b", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained(
+  "stabilityai/stable-code-3b",
+  trust_remote_code=True,
+  torch_dtype="auto",
+)
+model.cuda()
+inputs = tokenizer("import torch\nimport torch.nn as nn", return_tensors="pt").to(model.device)
+tokens = model.generate(
+  **inputs,
+  max_new_tokens=48,
+  temperature=0.2,
+  do_sample=True,
+)
+print(tokenizer.decode(tokens[0], skip_special_tokens=True))
 
-def generate_notice(input_text):
-    generator =  pipeline("text-generation", model="pszemraj/opt-350m-email-generation")  # Adjust model and device as needed
-
-    notice = generator(input_text, max_length=500, num_return_sequences=1, temperature=0.7)[0]['generated_text']
-    return notice
-
-if __name__ == "__main__":
-    # Replace 'your_input_text' with your actual input text
-    input_text = "Lorem ipsum dolor sit amet, consectetur adipiscing elit."
-
-    generated_notice = generate_notice(input_text)
-    print("Original Text:")
-    print(input_text)
-    print("\nGenerated Notice:")
-    print(generated_notice)
