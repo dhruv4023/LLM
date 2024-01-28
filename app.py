@@ -1,36 +1,57 @@
 import streamlit as st
-import requests
+from components import *
+from RetrievalQAWithLLMApp import RetrievalQAWithLLMApp 
+# API_ENDPOINT = 'http://127.0.0.1:8000/ask'
 
-# Replace 'your_api_endpoint' with the actual API endpoint you want to use
-API_ENDPOINT = 'https://dhruv4023-llmproject.hf.space/ask'
-# API_ENDPOINT = "http://localhost:8000/ask"
+RetrievalQAWithLLMApp.files=["https://www.indiacode.nic.in/bitstream/123456789/2338/1/A1882-04.pdf","https://registration.uk.gov.in/files/Stamp_Act_Eng.pdf","https://dolr.gov.in/sites/default/files/THE%20LAND%20ACQUISITION%20ACT.pdf","https://www.indiacode.nic.in/bitstream/123456789/13236/1/the_registration_act%2C_1908.pdf","https://www.indiacode.nic.in/bitstream/123456789/5615/1/muslim_marriages_registration_act%2C_1981.pdf","https://www.indiacode.nic.in/bitstream/123456789/2187/2/A187209.pdf","https://www.icsi.edu/media/webmodules/companiesact2013/COMPANIES%20ACT%202013%20READY%20REFERENCER%2013%20AUG%202014.pdf","https://www.indiacode.nic.in/bitstream/123456789/15351/1/iea_1872.pdf","https://www.iitk.ac.in/wc/data/IPC_186045.pdf","https://lddashboard.legislative.gov.in/sites/default/files/A1955-25_1.pdf","https://cdnbbsr.s3waas.gov.in/s380537a945c7aaa788ccfcdf1b99b5d8f/uploads/2023/05/2023050195.pdf","""https://sclsc.gov.in/theme/front/pdf/ACTS%20FINAL/THE%20CODE%20OF%20CIVIL%20PROCEDURE,%201908.pdf""","https://ncwapps.nic.in/acts/TheIndianChristianMarriageAct1872-15of1872.pdf","https://www.indiacode.nic.in/bitstream/123456789/2347/1/190907.pdf","https://www.indiacode.nic.in/bitstream/123456789/2280/1/A1869-04.pdf","https://www.indiacode.nic.in/bitstream/123456789/15480/1/special_marriage_act.pdf"]
 
-def ask(question):
-    # Send a POST request to the API
-    data = {'q': question}
-    response = requests.post(API_ENDPOINT, json=data)
-
-    # Check if the request was successful (status code 200)
-    if response.status_code == 200:
-        return response.json() #.get('answer', 'Error: No answer received from the API')
-    else:
-        return f"Error: Failed to get an answer. Status code: {response.status_code}"
+model = RetrievalQAWithLLMApp()
+if model.chain is None:
+    with st.spinner("Processing"):
+        model.create_chain()
 
 def main():
-    st.title("Indian Penal Code (IPC) Q&A")
+    header()
 
-    # st.image("https://www.google.com/imgres?imgurl=https%3A%2F%2Fthink360studio-media.s3.ap-south-1.amazonaws.com%2Fdownload%2Findia-flag-2021-wallpaper-1.png&tbnid=avMGtXMrg4Od7M&vet=12ahUKEwioxOX8nf-DAxWrmWMGHUWeCEoQMygLegUIARCNAQ..i&imgrefurl=https%3A%2F%2Fthink360studio.com%2Fblog%2Fbeautiful-india-flag-wallpapers-happy-independence-day&docid=NH42YRcPRUFRUM&w=1280&h=720&q=indian%20flag&ved=2ahUKEwioxOX8nf-DAxWrmWMGHUWeCEoQMygLegUIARCNAQ", caption="IPC Logo", use_column_width=True)
+    # Container for sticky title and input box
+    input_container = st.container()
 
-    # Create a stylish text input box with a button
-    question = st.text_input("Ask a question about Indian Penal Code:", key="question_input")
-    ask_button = st.button("Ask Question")
+    # Set a class for the sticky container
+    input_container.markdown(
+        f"""
+        <div style="
+            position: sticky;
+            top: 0;
+            background-color: #f4f4f4;  /* Adjust the background color as needed */
+            z-index: 100;
+        ">
+        """,
+        unsafe_allow_html=True
+    )
 
-    if ask_button:
-        # Call your ask function with the user's question
-        answer = ask(question)
+    # Input box inside the sticky container
+    question = input_container.text_input(
+        label="Enter your query👇",
+        key="question_input",
+        placeholder="Ask a question about Indian Penal Code",
+        label_visibility="collapsed"
+    )
 
-        # Display the answer with emojis and icons
-        st.write(answer["result"])
+    if question:
+        with st.spinner("Thinking..."):
+            st.session_state.chat_history.append({"q": question})
+            ans = model.ask_question(question)
+            st.session_state.chat_history.append({"a": ans})
+            print_history()
 
+    # Close the sticky container div
+    input_container.markdown("</div>", unsafe_allow_html=True)
+    
 if __name__ == "__main__":
+    # st.set_page_config(
+    #     page_title="IPC Q&A App",
+    #     page_icon="📘",
+    #     layout="centered"
+    # ) 
     main()
+
