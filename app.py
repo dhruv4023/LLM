@@ -2,8 +2,8 @@ import streamlit as st
 import requests
 
 # Replace 'your_api_endpoint' with the actual API endpoint you want to use
-# API_ENDPOINT = 'https://dhruv4023-llmproject.hf.space/ask'
-API_ENDPOINT = "http://localhost:8000/ask"
+API_ENDPOINT = 'https://dhruv4023-llmproject.hf.space/ask'
+# API_ENDPOINT = "http://localhost:8000/ask"
 
 def ask(question):
     # Send a POST request to the API
