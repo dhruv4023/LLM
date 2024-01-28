@@ -5,6 +5,7 @@ from langchain.embeddings import HuggingFaceHubEmbeddings,HuggingFaceInstructEmb
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain.llms import HuggingFaceHub
+load_dotenv()
 
 class RetrievalQAWithLLMApp:
     # Class attributes for static variables
