@@ -1,17 +1,21 @@
-from dotenv import load_dotenv
+import os
+import streamlit as st
+
 from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceHubEmbeddings,HuggingFaceInstructEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain.llms import HuggingFaceHub
-load_dotenv()
+
+
+os.environ["HUGGINGFACEHUB_API_TOKEN"] = st.secrets["env"]["HUGGINGFACEHUB_API_TOKEN"]
 
 class RetrievalQAWithLLMApp:
     # Class attributes for static variables
     files = ["IPC_186045.pdf"]
     # hfi_embeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small",cache_folder="../Models/")
-    hfi_embeddings = HuggingFaceHubEmbeddings(repo_id="sentence-transformers/all-MiniLM-L6-v2")
+    hfi_embeddings = HuggingFaceHubEmbeddings(repo_id="sentence-transformers/all-MiniLM-L6-v2")#,huggingfacehub_api_token=st.secrets.env.HUGGINGFACEHUB_API_TOKEN)
 
     chain = None
 
@@ -72,7 +76,4 @@ class RetrievalQAWithLLMApp:
         # result, src_data, src_pg_nms = extract_data_from_response(response)
 
         return response["result"]
-
-# # Example usage:
-# model = RetrievalQAWithLLMApp()
-# print(model.ask_question("who is judge ?"))
+# print(st.secrets.env.HUGGINGFACEHUB_API_TOKEN)
