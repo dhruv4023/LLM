@@ -6,3 +6,4 @@ Models/
 Outputs/
 tmp*
 DataSourceFiles/
+.streamlit
