@@ -11,48 +11,33 @@ if model.chain is None:
     with st.spinner("Processing"):
         model.create_chain()
 
-def main():
+
+def main(): 
     header()
-
-    # Container for sticky title and input box
-    input_container = st.container()
-
-    # Set a class for the sticky container
-    input_container.markdown(
-        f"""
-        <div style="
-            position: sticky;
-            top: 0;
-            background-color: #f4f4f4;  /* Adjust the background color as needed */
-            z-index: 100;
-        ">
-        """,
-        unsafe_allow_html=True
-    )
-
     # Input box inside the sticky container
-    question = input_container.text_input(
+    question = st.text_input(
         label="Enter your query👇",
         key="question_input",
         placeholder="Ask a question about Indian Penal Code",
         label_visibility="collapsed"
     )
-
     if question:
         with st.spinner("Thinking..."):
             st.session_state.chat_history.append({"q": question})
             ans = model.ask_question(question)
+            # ans="hello"
             st.session_state.chat_history.append({"a": ans})
             print_history()
 
-    # Close the sticky container div
-    input_container.markdown("</div>", unsafe_allow_html=True)
-    
-if __name__ == "__main__":
-    # st.set_page_config(
-    #     page_title="IPC Q&A App",
-    #     page_icon="📘",
-    #     layout="centered"
-    # ) 
-    main()
+    st.markdown("### Some Reference documents:")
+    st.markdown("- [Companies Act 2013](https://www.icsi.edu/media/webmodules/companiesact2013/COMPANIES%20ACT%202013%20READY%20REFERENCER%2013%20AUG%202014.pdf)")
+    st.markdown("- [Code of Civil Procedure 1908](https://sclsc.gov.in/theme/front/pdf/ACTS%20FINAL/THE%20CODE%20OF%20CIVIL%20PROCEDURE,%201908.pdf)")
+    st.markdown("- [Indian Penal Code 1860](https://www.iitk.ac.in/wc/data/IPC_186045.pdf)")
 
+if __name__ == "__main__":
+    st.set_page_config(
+        page_title="IPC Q&A App",
+        page_icon="📘",
+        layout="wide"
+    ) 
+    main()

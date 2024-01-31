@@ -6,7 +6,7 @@ def print_history():
         <style>
         .scrollable-container {
             overflow-y: auto;
-            max-height: 300px;  /* Adjust the max-height as needed */
+            max-height: 50vh;
         }
         </style>
         """,
@@ -78,17 +78,8 @@ def print_chat(message, is_user=True):
 
 def header():
     st.title("Chat LLB 👩‍⚖️")
-    
+
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = [
-            # {"q": "Initial question"},
-            # {"a": "Initial answer"},
-            # {"q": "Initial question"},
-            # {"a": "Initial answer"},
-            # {"q": "Initial question"},
-            # {"a": "Initial answer"},
-            # {"q": "Initial question"},
-            # {"a": "Initial answer"},
-            # {"q": "Initial question"},
-            # {"a": "Initial answer"},
+            {"a": "Greetings! 🌐 I'm your Indian Constitution Chat Bot, ready to navigate through legal intricacies. Explore acts like the Companies Act 2013 or Code of Civil Procedure 1908. Ask away! 📚⚖️"},
         ]
