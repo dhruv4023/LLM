@@ -78,8 +78,7 @@ def print_chat(message, is_user=True):
 
 def header():
     st.title("Chat LLB 👩‍⚖️")
-
+    st.markdown("Greetings! 🌐 I'm your Indian Constitution Chat Bot, ready to navigate through legal intricacies. Explore acts like the Companies Act 2013 or Code of Civil Procedure 1908. Ask away! 📚⚖️")
+    
     if "chat_history" not in st.session_state:
-        st.session_state.chat_history = [
-            {"a": "Greetings! 🌐 I'm your Indian Constitution Chat Bot, ready to navigate through legal intricacies. Explore acts like the Companies Act 2013 or Code of Civil Procedure 1908. Ask away! 📚⚖️"},
-        ]
+        st.session_state.chat_history = []
