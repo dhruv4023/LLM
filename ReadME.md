@@ -1,4 +1,4 @@
-# Generate Data Using HuggingFace Text-generator Model
+# Automated Legal Document Analysis and Question Answering System
 
 ## Requirements
 ### Python Version
