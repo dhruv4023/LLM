@@ -37,7 +37,7 @@ def main():
     question = st.text_input(
         label="Enter your query👇",
         key="question_input",
-        placeholder="Ask a question about Indian Penal Code",
+        placeholder="Ask a question about Indian Constitution...",
         label_visibility="collapsed"
     )
     if question:
