@@ -3,6 +3,12 @@ from components import *
 from RetrievalQAWithLLMApp import RetrievalQAWithLLMApp 
 # API_ENDPOINT = 'http://127.0.0.1:8000/ask'
 
+st.set_page_config(
+    page_title="IPC Q&A App",
+    page_icon="📘",
+    layout="wide"
+) 
+
 reference_documents = {
     "Transfer of Property Act 1882": "https://www.indiacode.nic.in/bitstream/123456789/2338/1/A1882-04.pdf",
     "Indian Stamp Act": "https://registration.uk.gov.in/files/Stamp_Act_Eng.pdf",
@@ -53,9 +59,4 @@ def main():
         st.markdown(f"- [{title}]({link})")
         
 if __name__ == "__main__":
-    st.set_page_config(
-        page_title="IPC Q&A App",
-        page_icon="📘",
-        layout="wide"
-    ) 
     main()
