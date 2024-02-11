@@ -7,3 +7,4 @@ Outputs/
 tmp*
 DataSourceFiles/
 .streamlit
+db/
