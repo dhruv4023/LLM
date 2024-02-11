@@ -83,14 +83,14 @@ questions = [
     "Rioting has happened in the neighboring society. Who will be responsible and what is the punishment for it?",
     "What is punishment for robbery and also murder?",
     "A person is selling adulterated drugs which is harmful to the health of people. The person has also sold drug to the children below the age of 15. What will be punishment for it?",
-    "Explain all laws related to marriage"
+    "what are the laws defines marriage?"
 ]
 
 # Display questions using st.markdown
 def header():
     st.title("Chatbot for Question Answering on Legal Documents 👩‍⚖️")
     st.markdown("Greetings! 🌐 I'm your Indian Constitution Chat Bot, ready to navigate through legal intricacies. Explore acts like the Companies Act 2013 or Code of Civil Procedure 1908. Ask away! 📚⚖️")
-    st.markdown("##### Here are some sample Questions\n" + "\n".join([f"- \"{question}\"" for question in questions]))
+    st.markdown("##### Here are some sample Questions\n" + "\n".join([f"- {question}" for question in questions]))
     
     if "chat_history" not in st.session_state:
         st.session_state.chat_history = []

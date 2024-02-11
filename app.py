@@ -1,3 +1,4 @@
+import time
 import streamlit as st
 from components import *
 from RetrievalQAWithLLMApp import RetrievalQAWithLLMApp 
@@ -28,8 +29,8 @@ reference_documents = {
     "Special Marriage Act 1954": "https://www.indiacode.nic.in/bitstream/123456789/15480/1/special_marriage_act.pdf"
 }
 
-RetrievalQAWithLLMApp.files = [value for value in reference_documents.values()]
-# RetrievalQAWithLLMApp.files=["D:\Files\LLM\Project\DataSourceFiles\IPC_186045.pdf"]
+# RetrievalQAWithLLMApp.files = [value for value in reference_documents.values()]
+RetrievalQAWithLLMApp.files=["D:\Files\LLM\Project\DataSourceFiles\IPC_186045.pdf"]
 
 model = RetrievalQAWithLLMApp()
 if model.chain is None:
@@ -49,10 +50,13 @@ def main():
     if question:
         with st.spinner("Thinking..."):
             st.session_state.chat_history.append({"q": question})
+            start_time = time.time()
             ans = model.ask_question(question)
+            end_time = time.time()
             # ans="hello"
             st.session_state.chat_history.append({"a": ans})
             print_history()
+            st.markdown("##### Time taken to generate answer: "+str(end_time-start_time)+" seconds)")
         
 if __name__ == "__main__":
     main()
