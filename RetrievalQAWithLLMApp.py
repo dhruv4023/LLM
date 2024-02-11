@@ -72,10 +72,9 @@ class RetrievalQAWithLLMApp:
     def ask_question(self, question: str):
         # Ensure the chain is created
         # Use the chain to ask the question
-        response =RetrievalQAWithLLMApp.chain({"query":question, "early_stopping":True,"min_length":2000,"max_tokens":5000})
-
-        # Assuming you have a function to extract data from the response
-        # result, src_data, src_pg_nms = extract_data_from_response(response)
-
-        return response["result"]
-# print(st.secrets.env.HUGGINGFACEHUB_API_TOKEN)
+        try:
+            response = RetrievalQAWithLLMApp.chain({"query":question, "early_stopping":True,"min_length":2000,"max_tokens":5000})
+            return response["result"]
+        except Exception as e:
+            return "Retry to ask question!, An error message: "+ str(e)
+        

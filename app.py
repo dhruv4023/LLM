@@ -53,10 +53,6 @@ def main():
             # ans="hello"
             st.session_state.chat_history.append({"a": ans})
             print_history()
-
-    st.markdown("### Some Reference documents:")
-    for title, link in reference_documents.items():
-        st.markdown(f"- [{title}]({link})")
         
 if __name__ == "__main__":
     main()

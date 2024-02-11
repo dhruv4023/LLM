@@ -1,4 +1,4 @@
-# Chatbot for Question Answering on Legal Document
+# Chatbot for Question Answering on Legal Documents
 
 ## Requirements
 ### Python Version
