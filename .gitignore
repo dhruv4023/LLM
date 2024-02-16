@@ -8,3 +8,5 @@ tmp*
 DataSourceFiles/
 .streamlit/
 db/
+chroma
+FAISS_db

@@ -1,15 +1,10 @@
-import os
-import streamlit as st
-
 from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import FAISS
 from langchain.embeddings import HuggingFaceHubEmbeddings,HuggingFaceInstructEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
 from langchain.llms import HuggingFaceHub
-
-
-os.environ["HUGGINGFACEHUB_API_TOKEN"] = st.secrets["env"]["HUGGINGFACEHUB_API_TOKEN"]
+from appConfig import *
 
 class RetrievalQAWithLLMApp:
     # Class attributes for static variables
