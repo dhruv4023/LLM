@@ -1,10 +1,12 @@
 /venv
 .env
 __pycache__/
-*.pkl
 Models/
 Outputs/
 tmp*
 DataSourceFiles/
 .streamlit
 db/
+chroma
+*.log
+FAISS_db/
