@@ -1,6 +1,7 @@
 import time
 import streamlit as st
 from components import *
+from sidebarComponent import *
 from RetrievalQAWithLLMApp import RetrievalQAWithLLMApp 
 # API_ENDPOINT = 'http://127.0.0.1:8000/ask'
 
@@ -32,14 +33,10 @@ reference_documents = {
 RetrievalQAWithLLMApp.files = [value for value in reference_documents.values()]
 # RetrievalQAWithLLMApp.files=["D:\Files\LLM\Project\DataSourceFiles\IPC_186045.pdf"]
 
-model = RetrievalQAWithLLMApp()
-if model.chain is None:
-    with st.spinner("Processing"):
-        model.create_chain()
-
-
-def main(): 
+def main(model:RetrievalQAWithLLMApp): 
     header()
+    add_your_documents(model)
+    user_history()
     # Input box inside the sticky container
     question = st.text_input(
         label="Enter your query👇",
@@ -59,4 +56,10 @@ def main():
             st.markdown("##### Time taken to generate answer: "+str(end_time-start_time)+" seconds)")
         
 if __name__ == "__main__":
-    main()
+    model = RetrievalQAWithLLMApp()
+    print("main called")
+    with st.spinner("Processing"):
+        model.create_vectore_and_store(folder_path="D:/Files/LLM/Project/DataSourceFiles")
+        model.create_chain()
+
+    main(model)
