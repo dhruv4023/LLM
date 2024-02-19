@@ -22,4 +22,5 @@ def add_your_documents(model:RetrievalQAWithLLMApp):
         st.subheader("Your documents")
         pdf_docs = st.file_uploader("Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
         if st.button("Process"):
-            model.process_pdf_files(pdf_docs)
+               with st.spinner("Processing..."):
+                    model.process_pdf_files(pdf_docs)

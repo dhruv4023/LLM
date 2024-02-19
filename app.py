@@ -3,6 +3,7 @@ import streamlit as st
 from components import *
 from sidebarComponent import *
 from RetrievalQAWithLLMApp import RetrievalQAWithLLMApp 
+
 # API_ENDPOINT = 'http://127.0.0.1:8000/ask'
 
 st.set_page_config(
@@ -11,6 +12,16 @@ st.set_page_config(
     layout="wide"
 ) 
 
+def load_model():
+    model = RetrievalQAWithLLMApp()
+    with st.spinner("Processing"):
+        # model.create_vectore_and_store(folder_path="D:/Files/LLM/Project/DataSourceFiles")
+        model.create_chain()
+    print("model loaded")
+    return model
+
+model = load_model()  # Corrected function call
+# model =None
 reference_documents = {
     "Transfer of Property Act 1882": "https://www.indiacode.nic.in/bitstream/123456789/2338/1/A1882-04.pdf",
     "Indian Stamp Act": "https://registration.uk.gov.in/files/Stamp_Act_Eng.pdf",
@@ -31,35 +42,39 @@ reference_documents = {
 }
 
 RetrievalQAWithLLMApp.files = [value for value in reference_documents.values()]
-# RetrievalQAWithLLMApp.files=["D:\Files\LLM\Project\DataSourceFiles\IPC_186045.pdf"]
 
-def main(model:RetrievalQAWithLLMApp): 
+def main(model: RetrievalQAWithLLMApp): 
+    """
+    Main function to run the IPC Q&A App.
+    
+    Parameters:
+        model (RetrievalQAWithLLMApp): The model for question answering.
+    """
     header()
     add_your_documents(model)
     user_history()
-    # Input box inside the sticky container
-    question = st.text_input(
-        label="Enter your query👇",
-        key="question_input",
-        placeholder="Ask a question about Indian Constitution...",
-        label_visibility="collapsed"
-    )
-    if question:
+    
+    col1,col2=st.columns([2,0.3],gap="small")
+    with col1:
+        question = st.text_input(
+            label="Enter your query👇",
+            key="question_input",
+            placeholder="Ask a question about Indian Constitution...",
+            label_visibility="collapsed",
+        )
+    btn = None
+    with col2:
+        btn = st.button("Send")
+    if btn:
         with st.spinner("Thinking..."):
             st.session_state.chat_history.append({"q": question})
             start_time = time.time()
             ans = model.ask_question(question)
             end_time = time.time()
-            # ans="hello"
             st.session_state.chat_history.append({"a": ans})
-            print_history()
-            st.markdown("##### Time taken to generate answer: "+str(end_time-start_time)+" seconds)")
-        
-if __name__ == "__main__":
-    model = RetrievalQAWithLLMApp()
-    print("main called")
-    with st.spinner("Processing"):
-        model.create_vectore_and_store(folder_path="D:/Files/LLM/Project/DataSourceFiles")
-        model.create_chain()
+            print_history()  # Make sure this function is defined
+            st.markdown("##### Time taken to generate answer: " + str(end_time - start_time) + " seconds")
+            
 
+if __name__ == "__main__":
     main(model)
