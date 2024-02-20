@@ -1,7 +1,6 @@
 /venv
 .env
 __pycache__/
-*.pkl
 Models/
 Outputs/
 tmp*
@@ -9,4 +8,3 @@ DataSourceFiles/
 .streamlit/
 db/
 chroma
-FAISS_db
