@@ -15,12 +15,12 @@ st.set_page_config(
 def load_model():
     model = RetrievalQAWithLLMApp()
     with st.spinner("Processing"):
-        # model.create_vectore_and_store(folder_path="D:/Files/LLM/Project/DataSourceFiles")
         model.create_chain()
+        # model.create_vectore_and_store(folder_path="D:/Files/LLM/Project/DataSourceFiles")
     print("model loaded")
     return model
 
-model = load_model()  # Corrected function call
+# model = load_model()  # Corrected function call
 
 reference_documents = {
     "Transfer of Property Act 1882": "https://www.indiacode.nic.in/bitstream/123456789/2338/1/A1882-04.pdf",
@@ -75,5 +75,7 @@ def main(model: RetrievalQAWithLLMApp):
             
 
 if __name__ == "__main__":
-    st.write("hello")
+    model = RetrievalQAWithLLMApp()
+    with st.spinner("Processing"):
+        model.create_chain()
     main(model)
