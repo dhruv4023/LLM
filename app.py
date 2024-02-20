@@ -21,7 +21,7 @@ def load_model():
     return model
 
 model = load_model()  # Corrected function call
-# model =None
+
 reference_documents = {
     "Transfer of Property Act 1882": "https://www.indiacode.nic.in/bitstream/123456789/2338/1/A1882-04.pdf",
     "Indian Stamp Act": "https://registration.uk.gov.in/files/Stamp_Act_Eng.pdf",
@@ -41,8 +41,6 @@ reference_documents = {
     "Special Marriage Act 1954": "https://www.indiacode.nic.in/bitstream/123456789/15480/1/special_marriage_act.pdf"
 }
 
-RetrievalQAWithLLMApp.files = [value for value in reference_documents.values()]
-
 def main(model: RetrievalQAWithLLMApp): 
     """
     Main function to run the IPC Q&A App.
@@ -54,7 +52,7 @@ def main(model: RetrievalQAWithLLMApp):
     add_your_documents(model)
     user_history()
     
-    col1,col2=st.columns([2,0.3],gap="small")
+    col1, col2=st.columns([2,0.3],gap="small")
     with col1:
         question = st.text_input(
             label="Enter your query👇",
@@ -77,4 +75,5 @@ def main(model: RetrievalQAWithLLMApp):
             
 
 if __name__ == "__main__":
+    st.write("hello")
     main(model)
