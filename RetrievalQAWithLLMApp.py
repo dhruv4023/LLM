@@ -1,5 +1,4 @@
 import os
-import torch
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.document_loaders import PyPDFLoader
 from langchain.vectorstores import FAISS
@@ -38,8 +37,8 @@ class CreateChunks:
 class GenerateEmbeddingFromPdfFile:
     def __init__(self):
         self.chunkObj = CreateChunks()
-        DEVICE = "cuda:0" if torch.cuda.is_available() else "cpu"
-        self.HFIembeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small", cache_folder="./Models/",model_kwargs={"device": DEVICE})
+        self.HFIembeddings = HuggingFaceHubEmbeddings(repo_id="sentence-transformers/all-MiniLM-L6-v2")
+        # self.HFIembeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small", cache_folder="./Models/",model_kwargs={"device": DEVICE})
 
     def process_uploaded_file_and_make_temp_vectors(self, files, current_vector_store: FAISS):
         for file in files:
