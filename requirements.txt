@@ -14,3 +14,5 @@ transformers==4.31.0
 pymongo
 
 pypdf==3.17.3
+
+firebase-admin

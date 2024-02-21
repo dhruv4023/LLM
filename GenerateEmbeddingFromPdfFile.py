@@ -63,5 +63,6 @@ class GenerateEmbeddingFromPdfFile:
             else:
                 flag = True
                 current_vector_store = FAISS.load_local("FAISS_db",self.HFIembeddings,os.path.basename(index).split(".")[0])
+        print("FAISS Vector files loaded")
         return current_vector_store
 

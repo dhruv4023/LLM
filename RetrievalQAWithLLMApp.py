@@ -30,13 +30,14 @@ class RetrievalQAWithLLMApp:
     def process_pdf_files(self, files):
         RetrievalQAWithLLMApp.vectorstore = RetrievalQAWithLLMApp.embedObj.process_uploaded_file_and_make_temp_vectors(files, RetrievalQAWithLLMApp.vectorstore)
         self.chain = None
-        self.create_chain()
+        self.create_chain(LOAD_FAISS_FILES=False)
         print("again ", end="")
 
-    def create_chain(self):
-        if RetrievalQAWithLLMApp.chain is None:
-            if RetrievalQAWithLLMApp.vectorstore is None:
-                RetrievalQAWithLLMApp.vectorstore = RetrievalQAWithLLMApp.embedObj.load_vectore_stores("FAISS_db", RetrievalQAWithLLMApp.vectorstore)
+    def create_chain(self,LOAD_FAISS_FILES=True):
+        # if RetrievalQAWithLLMApp.chain is None:
+            print(LOAD_FAISS_FILES)
+            if LOAD_FAISS_FILES:
+                RetrievalQAWithLLMApp.vectorstore = RetrievalQAWithLLMApp.embedObj.load_vectore_stores("FAISS_db")
             RetrievalQAWithLLMApp.chain = RetrievalQA.from_chain_type(
                 llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature": 0.8, "max_length": 4096, "max_new_tokens": 4096}),
                 chain_type="stuff",
