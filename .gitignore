@@ -8,4 +8,4 @@ DataSourceFiles/
 .streamlit/
 db/
 chroma
-liquid-virtue-370510-firebase-adminsdk-w9cyn-f455ffe729.json
+chat_llb_ferebaser_serviceAccountKey.json

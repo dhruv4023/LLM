@@ -49,8 +49,7 @@ class GenerateEmbeddingFromPdfFile:
             file_name = os.path.splitext(file)[0]
             if file_name not in current_vector_files:
                 docs = self.chunkObj.split_docs(os.path.join(folder_path, file))
-                FAISS.from_documents(docs, embedding=self.HFIembeddings).save_local(vector_store_folder_name,
-                                                                                     file_name)
+                FAISS.from_documents(docs, embedding=self.HFIembeddings).save_local(vector_store_folder_name, file_name)
                 print("Vector file created for:", file)
             else:
                 print("Vector file already exists for:", file)
