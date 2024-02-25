@@ -33,9 +33,9 @@ RetrievalQAWithLLMApp.files = [value for value in reference_documents.values()]
 # RetrievalQAWithLLMApp.files=["D:\Files\LLM\Project\DataSourceFiles\IPC_186045.pdf"]
 
 model = RetrievalQAWithLLMApp()
-if model.chain is None:
-    with st.spinner("Processing"):
-        model.create_chain()
+# if model.chain is None:
+#     with st.spinner("Processing"):
+#         model.create_chain()
 
 
 def main(): 
