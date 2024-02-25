@@ -6,7 +6,7 @@ from langchain.chains import RetrievalQA
 from langchain.llms.huggingface_endpoint import HuggingFaceEndpoint
 from appConfig import *
 
-class RetrievalQAWithLLMApp:
+class FAISSRetrievalQA:
     # Class attributes for static variables
     files = ["IPC_186045.pdf"]
     # hfi_embeddings = HuggingFaceInstructEmbeddings(model_name="thenlper/gte-small",cache_folder="../Models/")
@@ -49,12 +49,12 @@ class RetrievalQAWithLLMApp:
         return pages
     
     def create_chain(self):
-        if RetrievalQAWithLLMApp.chain is None:
-            pages = self.load_pdf_files(RetrievalQAWithLLMApp.files)
+        if FAISSRetrievalQA.chain is None:
+            pages = self.load_pdf_files(FAISSRetrievalQA.files)
 
-            vectorstore = FAISS.from_documents(pages, embedding=RetrievalQAWithLLMApp.hfi_embeddings)
+            vectorstore = FAISS.from_documents(pages, embedding=FAISSRetrievalQA.hfi_embeddings)
 
-            RetrievalQAWithLLMApp.chain = RetrievalQA.from_chain_type(
+            FAISSRetrievalQA.chain = RetrievalQA.from_chain_type(
                 llm = HuggingFaceEndpoint(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", temperature=0.8,max_new_tokens=4096),
                 chain_type="stuff",
                 retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),    
@@ -67,7 +67,7 @@ class RetrievalQAWithLLMApp:
         # Ensure the chain is created
         # Use the chain to ask the question
         try:
-            response = RetrievalQAWithLLMApp.chain({"query":question, "early_stopping":True,"min_length":2000,"max_tokens":5000})
+            response = FAISSRetrievalQA.chain({"query":question, "early_stopping":True,"min_length":2000,"max_tokens":5000})
             return response["result"]
         except Exception as e:
             return "Retry to ask question!, An error message: "+ str(e)

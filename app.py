@@ -1,7 +1,7 @@
 import time
 import streamlit as st
 from components import *
-from RetrievalQAWithLLMApp import RetrievalQAWithLLMApp 
+from FAISSRetrievalQA import FAISSRetrievalQA 
 # API_ENDPOINT = 'http://127.0.0.1:8000/ask'
 
 st.set_page_config(
@@ -29,10 +29,10 @@ reference_documents = {
     "Special Marriage Act 1954": "https://www.indiacode.nic.in/bitstream/123456789/15480/1/special_marriage_act.pdf"
 }
 
-RetrievalQAWithLLMApp.files = [value for value in reference_documents.values()]
+FAISSRetrievalQA.files = [value for value in reference_documents.values()]
 # RetrievalQAWithLLMApp.files=["D:\Files\LLM\Project\DataSourceFiles\IPC_186045.pdf"]
 
-model = RetrievalQAWithLLMApp()
+model = FAISSRetrievalQA()
 # if model.chain is None:
 #     with st.spinner("Processing"):
 #         model.create_chain()

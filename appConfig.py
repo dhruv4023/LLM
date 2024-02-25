@@ -1,8 +1,8 @@
 import os
 import streamlit as st
 
-# class Configurations():
-    # MONGO_DB_URL = st.secrets["MONGO_DB_URL"] 
-    # AUTH_API_END_POINT = st.secrets["AUTH_API_END_POINT"] 
-    
+MONGO_DB_URL = st.secrets["MONGO_DB_URL"]   
+MONGO_DB_NAME = st.secrets["MONGO_DB_NAME"]   
+MONGO_DB_NAME_CACHE = st.secrets["MONGO_DB_NAME_CACHE"]
+
 os.environ["HUGGINGFACEHUB_API_TOKEN"] = st.secrets["env"]["HUGGINGFACEHUB_API_TOKEN"]
