@@ -47,11 +47,14 @@ class RetrievalQAGenerator:
         self.llm = HuggingFaceEndpoint(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", temperature=0.8, max_new_tokens=4096)
 
     def generate_retrieval_qa_chain(self):
-        return RetrievalQA.from_chain_type(
+        print("creating chain")
+        chain= RetrievalQA.from_chain_type(
             llm=self.llm,
             retriever=self.qa_retriever,
             chain_type_kwargs={"prompt": self.prompt},
         )
+        print('chain creating')
+        return chain
 
 class Main:
     qa_chain = None
@@ -63,7 +66,11 @@ class Main:
             qa_generator = RetrievalQAGenerator(EMBEDDING_MODEL=Main.embedding_generator.embedding_model)
             Main.qa_chain = qa_generator.generate_retrieval_qa_chain()
     
-    def generate_embedding(self,file_path,collection_name="general"):
+    def generate_new_chain(self,collection_name:str):
+            qa_generator = RetrievalQAGenerator(EMBEDDING_MODEL=Main.embedding_generator.embedding_model,DB_COLLECTION_NAME=collection_name)
+            Main.qa_chain = qa_generator.generate_retrieval_qa_chain()
+    
+    def generate_embedding(self,file_path:str,collection_name="general"):
         Main.embedding_generator.generate_embeddings(file_path,collection_name)
 
     def ask_question(self, question: str):
@@ -72,8 +79,3 @@ class Main:
             return response["result"]
         except Exception as e:
             return "Retry to ask question!, An error message: "+ str(e)
-
-model = Main()
-model.generate_embedding("D:\Files\LLM\Project\DataSourceFiles\IPC_186045.pdf")
-print(model.ask_question("punishment for robbery?"))
-
