@@ -1,9 +1,9 @@
-from langchain.document_loaders import PyPDFLoader
-from langchain.vectorstores import FAISS
-from langchain.embeddings import HuggingFaceHubEmbeddings,HuggingFaceInstructEmbeddings
+from langchain.document_loaders.pdf import PyPDFLoader
+from langchain.vectorstores.faiss import FAISS
+from langchain.embeddings.huggingface_hub import HuggingFaceHubEmbeddings
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
-from langchain.llms import HuggingFaceHub
+from langchain.llms.huggingface_endpoint import HuggingFaceEndpoint
 from appConfig import *
 
 class RetrievalQAWithLLMApp:
@@ -55,7 +55,7 @@ class RetrievalQAWithLLMApp:
             vectorstore = FAISS.from_documents(pages, embedding=RetrievalQAWithLLMApp.hfi_embeddings)
 
             RetrievalQAWithLLMApp.chain = RetrievalQA.from_chain_type(
-                llm = HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature":0.8, "max_length":4096,"max_new_tokens":4096}),
+                llm = HuggingFaceEndpoint(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", temperature=0.8,max_new_tokens=4096),
                 chain_type="stuff",
                 retriever=vectorstore.as_retriever(search_kwargs={"k": 5}),    
                 # return_source_documents=True,

@@ -1,17 +1,23 @@
-langchain==0.0.184
+langchain==0.1.8
 python-dotenv==1.0.0
-PyPDF2==3.0.1
-streamlit
-# openai==0.27.6
-faiss-cpu==1.7.4
-altair==4
-tiktoken==0.4.0
-# uncomment to use huggingface llms
-huggingface-hub==0.14.1
 
-transformers==4.31.0
+# pdf
+PyPDF2==3.0.1
 pypdf==3.17.3
 
+# embedding
+InstructorEmbedding==1.0.1
+torch==2.2.1
+tqdm==4.66.2
+sentence-transformers==2.2.2
+
+
+# faiss
+faiss-cpu==1.7.4
+
 # mongodb
-pymongo
-gradio
+pymongo==4.6.1
+
+
+# User Interface
+streamlit==1.31.1
