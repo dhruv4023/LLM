@@ -2,7 +2,7 @@ import time
 import streamlit as st
 from components import *
 from sidebarComponent import *
-from RetrievalQAWithLLMApp import RetrievalQAWithLLMApp 
+from FAISSRetrivalQA import FAISSRetrivalQA 
 
 # API_ENDPOINT = 'http://127.0.0.1:8000/ask'
 
@@ -12,7 +12,7 @@ st.set_page_config(
     layout="wide"
 ) 
 
-def main(model: RetrievalQAWithLLMApp): 
+def main(model: FAISSRetrivalQA): 
     """
     Main function to run the IPC Q&A App.
     
@@ -46,7 +46,7 @@ def main(model: RetrievalQAWithLLMApp):
             
 
 if __name__ == "__main__":
-    model = RetrievalQAWithLLMApp()
+    model = FAISSRetrivalQA()
     with st.spinner("Processing"):
         model.create_chain()
     main(model)

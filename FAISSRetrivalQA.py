@@ -1,13 +1,13 @@
 from langchain.prompts import PromptTemplate
 from langchain.chains import RetrievalQA
-from langchain.llms import HuggingFaceHub
+from langchain.llms.huggingface_endpoint import HuggingFaceEndpoint
 from appConfig import *
 from GenerateEmbeddingFromPdfFile import *
 
-class RetrievalQAWithLLMApp:
+class FAISSRetrivalQA:
     chain = None
     vectorstore = None
-    embedObj = GenerateEmbeddingFromPdfFile()
+    embedObj = EmbeddingGenerater()
     def __init__(self):
         template = """
         You'r helpful AI assisant given the task to help people seeking advise.
@@ -25,10 +25,10 @@ class RetrievalQAWithLLMApp:
         self.prompt = PromptTemplate(template=template, input_variables=["context", "question"])
 
     def create_vector_and_store(self, folder_path: str):
-        RetrievalQAWithLLMApp.embedObj.create_vectores_and_store_locally("FAISS_db", folder_path)
+        FAISSRetrivalQA.embedObj.create_vectores_and_store_locally("FAISS_db", folder_path)
 
     def process_pdf_files(self, files):
-        RetrievalQAWithLLMApp.vectorstore = RetrievalQAWithLLMApp.embedObj.process_uploaded_file_and_make_temp_vectors(files, RetrievalQAWithLLMApp.vectorstore)
+        FAISSRetrivalQA.vectorstore = FAISSRetrivalQA.embedObj.process_uploaded_file_and_make_temp_vectors(files, FAISSRetrivalQA.vectorstore)
         self.chain = None
         self.create_chain(LOAD_FAISS_FILES=False)
         print("again ", end="")
@@ -37,18 +37,18 @@ class RetrievalQAWithLLMApp:
         # if RetrievalQAWithLLMApp.chain is None:
             print(LOAD_FAISS_FILES)
             if LOAD_FAISS_FILES:
-                RetrievalQAWithLLMApp.vectorstore = RetrievalQAWithLLMApp.embedObj.load_vectore_stores("FAISS_db")
-            RetrievalQAWithLLMApp.chain = RetrievalQA.from_chain_type(
-                llm=HuggingFaceHub(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", model_kwargs={"temperature": 0.8, "max_length": 4096, "max_new_tokens": 4096}),
+                FAISSRetrivalQA.vectorstore = FAISSRetrivalQA.embedObj.load_vectore_stores("FAISS_db")
+            FAISSRetrivalQA.chain = RetrievalQA.from_chain_type(
+                llm=HuggingFaceEndpoint(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", temperature =0.8,max_length= 4096,max_new_tokens=4096),
                 chain_type="stuff",
-                retriever=RetrievalQAWithLLMApp.vectorstore.as_retriever(search_kwargs={"k": 5}),
+                retriever=FAISSRetrivalQA.vectorstore.as_retriever(search_kwargs={"k": 5}),
                 chain_type_kwargs={"prompt": self.prompt},
             )
             print("chain created ------------------------------------")
 
     def ask_question(self, question: str):
         try:
-            response = RetrievalQAWithLLMApp.chain({"query": question, "early_stopping": True, "min_length": 100, "max_tokens": 1500})
+            response = FAISSRetrivalQA.chain({"query": question, "early_stopping": True, "min_length": 100, "max_tokens": 1500})
             return response["result"]
         except Exception as e:
             return "Retry to ask question!, An error message: " + str(e)

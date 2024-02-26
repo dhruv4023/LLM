@@ -30,7 +30,7 @@ class CreateChunks:
         docs = RecursiveCharacterTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap).split_documents(PyPDFLoader(pdf_file_path).load_and_split())
         return docs
     
-class GenerateEmbeddingFromPdfFile:
+class EmbeddingGenerater:
     def __init__(self):
         self.chunkObj = CreateChunks()
         self.HFIembeddings = HuggingFaceHubEmbeddings(repo_id="sentence-transformers/all-MiniLM-L6-v2")

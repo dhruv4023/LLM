@@ -1,5 +1,5 @@
 import streamlit as st
-import RetrievalQAWithLLMApp
+import FAISSRetrivalQA
 
 data=[
     {
@@ -17,7 +17,7 @@ def user_history():
         for d in data:
                 st.write(d["chat_title"])
 
-def add_your_documents(model:RetrievalQAWithLLMApp):
+def add_your_documents(model:FAISSRetrivalQA):
     with st.sidebar:
         st.subheader("Your documents")
         pdf_docs = st.file_uploader("Upload your PDFs here and click on 'Process'", accept_multiple_files=True)
