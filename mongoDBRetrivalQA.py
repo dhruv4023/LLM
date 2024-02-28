@@ -7,6 +7,7 @@ from langchain.chains import RetrievalQA
 from appConfig import *
 from pymongo import MongoClient
 from langchain.document_loaders.pdf import PyPDFLoader
+from langchain.callbacks import streaming_stdout
 
 class EmbeddingGenerator:
     client = None
@@ -44,16 +45,24 @@ class RetrievalQAGenerator:
         Question: {question} including section number and all related details.
         Answer:"""
         self.prompt = PromptTemplate(template=template, input_variables=["context", "question"])
-        self.llm = HuggingFaceEndpoint(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", temperature=0.8, max_new_tokens=4096)
+        self.llm = HuggingFaceEndpoint(
+            repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1",    
+            repetition_penalty=1.03,
+            streaming=True,
+            callbacks = [streaming_stdout.StreamingStdOutCallbackHandler()],
+            temperature=0.8, 
+            max_new_tokens=4096
+        )
 
     def generate_retrieval_qa_chain(self):
         print("creating chain")
+        
         chain= RetrievalQA.from_chain_type(
             llm=self.llm,
             retriever=self.qa_retriever,
             chain_type_kwargs={"prompt": self.prompt},
         )
-        print('chain creating')
+        print('chain created')
         return chain
 
 class Main:
