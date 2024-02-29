@@ -39,7 +39,7 @@ class FAISSRetrivalQA:
             if LOAD_FAISS_FILES:
                 FAISSRetrivalQA.vectorstore = FAISSRetrivalQA.embedObj.load_vectore_stores("FAISS_db")
             FAISSRetrivalQA.chain = RetrievalQA.from_chain_type(
-                llm=HuggingFaceEndpoint(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", temperature =0.8,max_length= 4096,max_new_tokens=4096),
+                llm=HuggingFaceEndpoint(repo_id="mistralai/Mixtral-8x7B-Instruct-v0.1", temperature = 0.85, max_length= 4096,max_new_tokens=4096),
                 chain_type="stuff",
                 retriever=FAISSRetrivalQA.vectorstore.as_retriever(search_kwargs={"k": 5}),
                 chain_type_kwargs={"prompt": self.prompt},
@@ -48,7 +48,7 @@ class FAISSRetrivalQA:
 
     def ask_question(self, question: str):
         try:
-            response = FAISSRetrivalQA.chain({"query": question, "early_stopping": True, "min_length": 100, "max_tokens": 1500})
+            response = FAISSRetrivalQA.chain({"query": question, "early_stopping": True, "min_length": 50, "max_tokens": 5000})
             return response["result"]
         except Exception as e:
             return "Retry to ask question!, An error message: " + str(e)
