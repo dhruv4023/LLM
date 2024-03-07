@@ -2,7 +2,8 @@
 
 ## Requirements
 ### Python Version
-- Python 3.9.10
+- [python 3.9.13](https://www.python.org/downloads/release/python-3913/) 
+
 
 ### Huggingface API
 - Generate your API key and place it in the .streamlit/secrets.toml file:
