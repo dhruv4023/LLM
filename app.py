@@ -1,7 +1,7 @@
 import time
 import streamlit as st
 from components import *
-from MongoDBRetrivalQA import Main 
+from Middleware import Main 
 # API_ENDPOINT = 'http://127.0.0.1:8000/ask'
 
 st.set_page_config(
