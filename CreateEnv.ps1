@@ -5,8 +5,6 @@ $venvName = "venv"
 $venvExists = Test-Path ($venvName)
 
 if (-not $venvExists) {
-    New-Item -ItemType Directory -Path ".\Models"
-    New-Item -ItemType Directory -Path ".\output"
     # Create virtual environment if it doesn't exist
     Write-Host "Creating virtual environment..."
     python -m venv $venvName

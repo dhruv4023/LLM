@@ -50,4 +50,4 @@
 
 
 ### HuggingFaceHub Repository link: 
-- https://huggingface.co/spaces/dhruv4023/llmproject
+- https://huggingface.co/spaces/dhruv4023/APIchatbot

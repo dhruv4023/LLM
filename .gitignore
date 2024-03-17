@@ -10,3 +10,4 @@ db/
 chroma
 *.log
 FAISS_db/
+CreateEnv.ps1
