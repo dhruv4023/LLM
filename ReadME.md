@@ -1,4 +1,4 @@
-# Generate Data Using HuggingFace Text-generator Model
+# Automated Legal Document Analysis and Question Answering System
 
 ## Requirements
 ### Python Version
@@ -35,10 +35,6 @@
 - Create folders:
     1. Outputs
     2. Models (if you want to download manually) (Not necessary)
-- Install the following models:
-    - gpt2
-    - gte-small
-    - Mixtral
 
 ## References
 - [YouTube Video Reference](https://www.youtube.com/watch?v=dXxQ0LR-3Hg&t=123s)
@@ -51,3 +47,7 @@
 
 ### PDF Documents
 - [The Indian Penal Code](https://www.iitk.ac.in/wc/data/IPC_186045.pdf)
+
+
+### HuggingFaceHub Repository link: 
+- https://huggingface.co/spaces/dhruv4023/llmproject

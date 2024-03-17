@@ -16,10 +16,11 @@ sentence-transformers==2.2.2
 transformers==4.31.0
 
 pypdf==3.17.3
-
 # to generate word document 
 python-docx==1.1.0
 
 # to create API
 Flask==3.0.0
 
+chromadb==0.4.15
+unstructured
