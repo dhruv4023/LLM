@@ -9,10 +9,10 @@ from fastapi import FastAPI, File, UploadFile, Depends, Form, BackgroundTasks
 from OtherFun import * 
 from Middleware import Main
 from verifyToken import verify_token_and_role
-import os
-# origins = ["https://cbns.vercel.app", "https://hfhchatbot.vercel.app", "http://localhost:5000", "http://localhost:3000", "https://localhost:5000"]
+# import os
+origins = ["https://chatbotservernode.onrender.com","https://cbns.vercel.app", "https://hfhchatbot.vercel.app", "http://localhost:5000", "http://localhost:3000", "https://localhost:5000"]
 
-origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
+# origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
 
 app = FastAPI(debug=True)
 
@@ -33,7 +33,7 @@ class BodyModel(BaseModel):
     
 @app.get("/")
 async def home():
-    return "server is running..."
+    return "chatbot api server is running..."
 
 
 @app.post("/ask")
@@ -83,3 +83,4 @@ async def createTmpChain(background_tasks: BackgroundTasks, files: List[UploadFi
             return JSONResponse(content={"success": False, "error": "Unsupported file format"})
     except Exception as e:
         return JSONResponse(content={"success": False, "error": str(e)})
+

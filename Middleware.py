@@ -43,8 +43,7 @@ class Main:
         qa_generator = MongoChainGenerator(
             embedding_model=Main.embedding_generator.embedding_model,
             template_context=CONST_VAR.TEMPLATE_CONTEXT,
-            tmp_vector_embedding=Main.embedding_generator.generate_tmp_embeddings(
-                pdf_bytes=contents)
+            tmp_vector_embedding=Main.embedding_generator.generate_tmp_embeddings(pdf_bytes=contents)
         )
         Main.qa_chains[tmp_collection_name] = qa_generator.generate_retrieval_qa_chain()
         LOG.debug(tmp_collection_name + ' chain created')
@@ -61,3 +60,6 @@ class Main:
         else:
             LOG.warning("Chain for collection '{}' not found.".format(collection_name))
             return "Chain for collection '{}' not found.".format(collection_name)
+
+    def check_collection_name(self, collection_name):
+        return collection_name in self.qa_chains
