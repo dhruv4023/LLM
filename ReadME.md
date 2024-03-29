@@ -14,14 +14,20 @@
 
 ## Setup Environment
 
-### Option 1: Automated Setup (PowerShell)
+### Clone Repository 
+- Clone Repository
+    ```
+    git clone https://github.com/dhruv4023/ChatBotAppClient
+    ```
+### After cloning Repository 
+#### Option 1: Automated Setup (PowerShell)
 - Run `CreateEnv.ps1` file in PowerShell. It will:
     - Create a virtual environment
     - Activate it
     - Create temporary folders
     - Install necessary Python modules
 
-### Option 2: Manual Setup
+#### Option 2: Manual Setup
 - Create a virtual environment:
     ```bash
     python -m venv .venv
