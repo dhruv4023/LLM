@@ -12,7 +12,7 @@ jobs:
     - name: Sync with Hugging Face
       uses: nateraw/huggingface-sync-action@v0.0.4
       with:
-        github_repo_id: dhruv4023/tmp
+        github_repo_id: dhruv4023/LLM
         huggingface_repo_id: dhruv4023/chatbotAPI
         repo_type: space
         space_sdk: docker
