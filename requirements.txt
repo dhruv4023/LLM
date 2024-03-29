@@ -7,7 +7,7 @@ pypdf==3.17.3
 
 # embedding
 InstructorEmbedding==1.0.1
-torch==2.2.1
+torch==2.2.2
 tqdm==4.66.2
 sentence-transformers==2.2.2
 faiss-cpu

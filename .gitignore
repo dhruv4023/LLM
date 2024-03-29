@@ -1,13 +1,5 @@
-/venv
+__pycache__
+.venv
 .env
-__pycache__/
-Models/
-Outputs/
 tmp*
-DataSourceFiles/
-.streamlit
-db/
-chroma
 *.log
-FAISS_db/
-CreateEnv.ps1

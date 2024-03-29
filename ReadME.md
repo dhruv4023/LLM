@@ -22,19 +22,18 @@
 ### Option 2: Manual Setup
 - Create a virtual environment:
     ```bash
-    python -m venv venv
+    python -m venv .venv
     ```
 - Activate virtual environment:
     ```bash
-    venv\Scripts\Activate.ps1
+    .venv\Scripts\Activate.ps1
     ```
 - Install Python modules:
     ```bash
     python -m pip install -r "requirements.txt"
     ```
 - Create folders:
-    1. Outputs
-    2. Models (if you want to download manually) (Not necessary)
+    - Models (if you want to download manually) (Not necessary)
 
 ## References
 - [YouTube Video Reference](https://www.youtube.com/watch?v=dXxQ0LR-3Hg&t=123s)
