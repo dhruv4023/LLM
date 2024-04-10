@@ -1,7 +1,7 @@
 from fastapi import UploadFile
 import asyncio
-from Middleware import Main
-from appConfig import LOG
+from src.bot.main import Main
+from src.config.appConfig import LOG
 
 
 def delete_chain_after_delay(model: Main, chain_name: str):
