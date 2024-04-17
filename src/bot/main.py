@@ -1,7 +1,8 @@
-from MongoChainGenerator import *
-from MongoEmbeddingGenerator import *
-from DATABASE import *
-from appConfig import LOG
+from src.bot.MongoChainGenerator import *
+from src.bot.MongoEmbeddingGenerator import *
+
+from src.config.appConfig import LOG
+from src.config.databaseConfig import DATABASE
 
 
 class Main:

@@ -1,7 +1,8 @@
 from io import BytesIO
 import PyPDF2
-from appConfig import *
-from DATABASE import *
+from src.config.appConfig import *
+from src.config.databaseConfig import DATABASE
+
 from langchain.vectorstores.faiss import FAISS
 from langchain.vectorstores.mongodb_atlas import MongoDBAtlasVectorSearch
 from langchain.embeddings.huggingface_hub import HuggingFaceHubEmbeddings

@@ -4,14 +4,22 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+class CLOUDINARY():
+    CLOUDINARY_CLOUD_NAME = os.environ.get("CLOUDINARY_CLOUD_NAME")
+    CLOUDINARY_API_KEY = os.environ.get("CLOUDINARY_API_KEY")
+    CLOUDINARY_API_SECRET = os.environ.get("CLOUDINARY_API_SECRET")
 
 class ENV_VAR():
     MONGO_DB_URL = os.environ.get("MONGO_DB_URL")
     MONGO_DB_NAME = os.environ.get("MONGO_DB_NAME")
+    MONGO_DB_NAME_CHATS = os.environ.get("MONGO_DB_NAME_CHATS")
     HUGGINGFACEHUB_API_TOKEN = os.environ.get("HUGGINGFACEHUB_API_TOKEN")
     MONGO_DB_NAME_CACHE = os.environ.get("MONGO_DB_NAME_CACHE")
     JWT_SECRET = os.environ.get("JWT_SECRET")
-
+    AUTH_API_END = os.environ.get("AUTH_API_END")
+    DEBUG = (
+        os.environ.get("DEBUG").lower() == "true" if os.environ.get("DEBUG") else False
+    )
 
 class CONST_VAR():
     TEXT_GENERATOR_MODEL_REPO_ID = "mistralai/Mixtral-8x7B-Instruct-v0.1"
@@ -59,4 +67,6 @@ class LOG:
     def critical(msg):
         logging.critical(msg)
 
-LOG.configure_logging()  # Set logging level to INFO
+
+if ENV_VAR.DEBUG:
+    LOG.configure_logging(logging.DEBUG)

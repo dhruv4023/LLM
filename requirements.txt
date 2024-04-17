@@ -1,5 +1,7 @@
 langchain==0.1.8
 python-dotenv==1.0.0
+huggingface_hub
+typing
 
 # pdf
 PyPDF2==3.0.1
@@ -15,13 +17,16 @@ faiss-cpu
 # mongodb
 pymongo==4.6.1
 
+cloudinary
+
 # API-END point
 fastapi==0.109.2
 fastapi-cors
 uvicorn[standard]==0.17.*
 python-multipart==0.0.9
 PyJWT==2.8.0
+pydantic
 
 
-huggingface_hub
-typing
+
+# requests-toolbelt
