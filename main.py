@@ -6,7 +6,7 @@ from starlette.middleware.cors import CORSMiddleware
 from src.main import main
 
 # import os
-origins = ["http://localhost:3000"]
+origins = ["http://localhost:3000","https://chatbothub.vercel.app"]
 
 # origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
 app = FastAPI(debug=ENV_VAR.DEBUG)
