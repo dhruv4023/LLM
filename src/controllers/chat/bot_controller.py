@@ -2,8 +2,10 @@ from fastapi import BackgroundTasks, APIRouter, Request, UploadFile, Depends, Fi
 from typing import List
 
 from src.helpers.response import ResponseHandler
+from src.helpers.json_convertor import convert_to_json
 
 from src.middleware.verifyToken import verify_token
+from src.services.message_services import save_question_and_answer_to_chat_history
 
 from src.bot.main import Main
 from src.bot.OtherFun import delete_chain_after_delay, process_file
@@ -13,11 +15,11 @@ router = APIRouter()
 model = Main()
 
 
-@router.post("/ask")
+@router.post("/ask-question")
 async def askQ(req: Request, token: str = Depends(verify_token)):
     try:
-        form_data = await req.form()
-        response = model.ask_question(
+        form_data = await req.json()
+        answer = model.ask_question(
             form_data["query"],
             (
                 token["username"]
@@ -25,8 +27,19 @@ async def askQ(req: Request, token: str = Depends(verify_token)):
                 else form_data["collectionName"]
             ),
         )
-        return ResponseHandler.success(2001, response)
+        await save_question_and_answer_to_chat_history(
+            token["username"],
+            {
+                "question": form_data["query"],
+                "answer": answer,
+                "collectionName": (
+                    form_data["query"] if form_data["query"] else "CHAT WITH YOUR PDF"
+                ),
+            },
+        )
+        return ResponseHandler.success(2001, answer)
     except Exception as error:
+        print(error)
         return ResponseHandler.error(9999, error, 500)
 
 

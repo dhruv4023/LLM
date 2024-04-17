@@ -46,7 +46,7 @@ async def delete_question_from_history(
         ].update_one(
             {"username": username, "history._id": ObjectId(questionId)}, update_query
         )
-
+        print(result)
         if result.matched_count != 0:
             return ResponseHandler.success(4005)
         else:

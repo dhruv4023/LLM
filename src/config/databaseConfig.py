@@ -12,9 +12,3 @@ class DATABASE:
         if DATABASE.client is None:
             DATABASE.client = MongoClient(ENV_VAR.MONGO_DB_URL)
             print("mongodb connected")
-
-            # print(
-            #     DATABASE.client[ENV_VAR.MONGO_DB_NAME_CHATS]["chathistories"].find_one(
-            #         {"username": "dhruv4023","history": {"_id": "65f326753dee7ed79642f306"}}
-            #     )
-            # )
