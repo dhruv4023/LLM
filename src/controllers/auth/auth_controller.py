@@ -1,4 +1,5 @@
-from fastapi import APIRouter, Response, Request, UploadFile
+from fastapi import APIRouter, Request, UploadFile
+from fastapi.responses import RedirectResponse
 from src.config.appConfig import ENV_VAR
 from src.helpers.response import ResponseHandler
 from src.helpers.send_request import sendRequest
@@ -39,6 +40,16 @@ async def get_user_names():
         return ResponseHandler.error(9999, e)
 
 
+@router.get("/login/google/")
+async def google_login_control(req: Request, baseurl: str):
+    try:
+        # Construct the URL with the query parameters
+        auth_url = f"{AUTH_API_END}/api/v1/auth/google?baseurl={baseurl}"
+        return RedirectResponse(url=auth_url)
+    except Exception as e:
+        return ResponseHandler.error(9999, e)
+
+
 @router.post("/login/")
 async def login_control(req: dict):
     try:
@@ -57,6 +68,28 @@ async def change_pass_control(req: dict, authorization: str = None):
 
         response = sendRequest(
             f"{AUTH_API_END}/api/v1/auth/change/password", "post", req, None, headers
+        )
+        return ResponseHandler.success_mediator(response)
+    except Exception as e:
+        return ResponseHandler.error(9999, e)
+
+
+@router.get("/get/session/")
+async def get_session(req: Request):
+    try:
+        response = sendRequest(
+            f"{AUTH_API_END}/api/v1/auth/get/session/", "get", cookies=req.cookies
+        )
+        return ResponseHandler.success_mediator(response)
+    except Exception as e:
+        return ResponseHandler.error(9999, e)
+
+
+@router.get("/logout/")
+async def logout_control(req: Request):
+    try:
+        response = sendRequest(
+            f"{AUTH_API_END}/api/v1/auth/logout/", "get", cookies=req.cookies
         )
         return ResponseHandler.success_mediator(response)
     except Exception as e:

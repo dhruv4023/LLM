@@ -2,15 +2,17 @@ from fastapi import FastAPI
 from src.config.appConfig import ENV_VAR
 from starlette.middleware.gzip import GZipMiddleware
 from starlette.middleware.cors import CORSMiddleware
+from starlette.middleware.sessions import SessionMiddleware
 
 from src.main import main
 
 # import os
-origins = ["http://localhost:3000","https://chatbothub.vercel.app"]
+origins = ["http://localhost:3000", "https://chatbothub.vercel.app"]
 
 # origins = os.getenv("ALLOWED_ORIGINS", "").split(",")
 app = FastAPI(debug=ENV_VAR.DEBUG)
 
+app.add_middleware(SessionMiddleware, secret_key=ENV_VAR.SESSION_SECRET)
 app.add_middleware(GZipMiddleware)
 app.add_middleware(
     CORSMiddleware,

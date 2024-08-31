@@ -16,6 +16,7 @@ class ENV_VAR():
     HUGGINGFACEHUB_API_TOKEN = os.environ.get("HUGGINGFACEHUB_API_TOKEN")
     MONGO_DB_NAME_CACHE = os.environ.get("MONGO_DB_NAME_CACHE")
     JWT_SECRET = os.environ.get("JWT_SECRET")
+    SESSION_SECRET = os.environ.get("SESSION_SECRET")
     AUTH_API_END = os.environ.get("AUTH_API_END")
     DEBUG = (
         os.environ.get("DEBUG").lower() == "true" if os.environ.get("DEBUG") else False
