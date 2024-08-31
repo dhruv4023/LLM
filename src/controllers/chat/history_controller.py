@@ -63,6 +63,7 @@ async def get_chat_history_by_user_id(
     tokenData: str = Depends(verify_token),
 ):
     try:
+        print(tokenData)
         username = tokenData["username"]
 
         start_index = (page - 1) * limit
