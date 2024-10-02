@@ -37,9 +37,8 @@ async def askQ(req: Request, token: str = Depends(verify_token)):
                 ),
             },
         )
-        return ResponseHandler.success(2001, answer)
+        return ResponseHandler.success(2000, answer)
     except Exception as error:
-        print(error)
         return ResponseHandler.error(9999, error, 500)
 
 

@@ -57,7 +57,7 @@ class Main:
                 return response["result"]
             except Exception as e:
                 LOG.error("An error occurred while answering question: {}".format(str(e)))
-                return "Retry to ask question! An error occurred: {}".format(str(e))
+                raise TimeoutError("Retry to ask question! An error occurred: {}".format(str(e)))
         else:
             LOG.warning("Chain for collection '{}' not found.".format(collection_name))
             return "Chain for collection '{}' not found.".format(collection_name)
